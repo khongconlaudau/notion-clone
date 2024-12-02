@@ -12,6 +12,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import {
   DropdownMenu,
@@ -21,10 +22,22 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ChevronsLeftRight, ChevronsUpDown, Home, Inbox } from "lucide-react";
-import { it } from "node:test";
+import {
+  ChevronsLeftRight,
+  ChevronsUpDown,
+  Home,
+  Inbox,
+  PlusCircle,
+  Search,
+  Settings,
+} from "lucide-react";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { SignOutButton, useUser } from "@clerk/clerk-react";
+import { useMutation, useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import Item from "./Item";
+import { toast } from "sonner";
+import DocumentList from "./DocumentList";
 const items = [
   {
     title: "Home",
@@ -39,11 +52,23 @@ const items = [
 ];
 const Navigation = () => {
   const { user } = useUser();
+  const create = useMutation(api.documents.create);
 
   const signedInWithGitHub = user?.externalAccounts.some(
     (account) => account.provider === "github"
   );
-  const userEmail: string = user?.emailAddresses[0].emailAddress!;
+
+  const handleCreate = () => {
+    const promise = create({
+      title: "Untitled",
+    });
+
+    toast.promise(promise, {
+      loading: "Creating a new note...",
+      success: "A new note created!",
+      error: "Failed to create a new note.",
+    });
+  };
   return (
     <Sidebar className="bg-[#1b1b1b]">
       <SidebarHeader className="font-bold">Documents</SidebarHeader>
@@ -53,16 +78,21 @@ const Navigation = () => {
           <SidebarGroupLabel>My Docmument</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <Link href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              <SidebarMenuItem>
+                <Item
+                  label="Search"
+                  isSearch
+                  icon={Search}
+                  onclick={() => {}}
+                />
+                <Item
+                  onclick={handleCreate}
+                  label="New Page"
+                  icon={PlusCircle}
+                />
+              </SidebarMenuItem>
+              <DocumentList />
+              {/* documents */}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -105,9 +135,12 @@ const Navigation = () => {
               )}
             </DropdownMenuLabel>
             <DropdownMenuSeparator className="bg-gray-300 " />
-            <DropdownMenuItem>Billing</DropdownMenuItem>
-            <DropdownMenuItem>Team</DropdownMenuItem>
-            <DropdownMenuItem>Subscription</DropdownMenuItem>
+            <DropdownMenuItem>
+              <div className="w-full translate-x-[-12px]">
+                <Item label="Setting" icon={Settings} onclick={() => {}} />
+              </div>
+            </DropdownMenuItem>
+
             <DropdownMenuItem
               asChild
               className="w-full cursor-pointer text-muted-foreground"

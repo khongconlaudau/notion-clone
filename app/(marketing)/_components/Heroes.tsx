@@ -4,7 +4,6 @@ import Lottie from "lottie-react";
 import HeroAnimation from "@/public/Animation/HeroAnimation.json";
 import Image from "next/image";
 import { useConvexAuth } from "convex/react";
-import { Spinner } from "@/components/spinner";
 const Heroes = () => {
   const { isLoading } = useConvexAuth();
   return (
