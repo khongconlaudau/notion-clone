@@ -5,6 +5,7 @@ import { useConvexAuth } from "convex/react";
 import { redirect } from "next/navigation";
 import React, { ReactNode } from "react";
 import Navigation from "./_components/Navigation";
+import { SearchCommand } from "@/components/search-command";
 const MainLayout = ({ children }: { children: ReactNode }) => {
   const { isAuthenticated, isLoading } = useConvexAuth();
 
@@ -25,6 +26,7 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
         <Navigation />
         <main className="w-full">
           <SidebarTrigger />
+          <SearchCommand />
           {children}
         </main>
       </div>

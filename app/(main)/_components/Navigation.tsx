@@ -27,9 +27,11 @@ import {
   ChevronsUpDown,
   Home,
   Inbox,
+  Plus,
   PlusCircle,
   Search,
   Settings,
+  Trash,
 } from "lucide-react";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { SignOutButton, useUser } from "@clerk/clerk-react";
@@ -38,6 +40,10 @@ import { api } from "@/convex/_generated/api";
 import Item from "./Item";
 import { toast } from "sonner";
 import DocumentList from "./DocumentList";
+import { Popover, PopoverTrigger } from "@/components/ui/popover";
+import { PopoverContent } from "@radix-ui/react-popover";
+import { useIsMobile } from "@/hooks/use-mobile";
+import TrashBox from "./TrashBox";
 const items = [
   {
     title: "Home",
@@ -53,6 +59,7 @@ const items = [
 const Navigation = () => {
   const { user } = useUser();
   const create = useMutation(api.documents.create);
+  const isMobile = useIsMobile();
 
   const signedInWithGitHub = user?.externalAccounts.some(
     (account) => account.provider === "github"
@@ -92,6 +99,18 @@ const Navigation = () => {
                 />
               </SidebarMenuItem>
               <DocumentList />
+              <Item onclick={handleCreate} icon={Plus} label="Add a page" />
+              <Popover>
+                <PopoverTrigger className="w-full mt-4">
+                  <Item icon={Trash} label="Trash" />
+                </PopoverTrigger>
+                <PopoverContent
+                  className="p-0 w-72 rounded-sm border shadow-md font-medium"
+                  side={isMobile ? "bottom" : "right"}
+                >
+                  <TrashBox />
+                </PopoverContent>
+              </Popover>
               {/* documents */}
             </SidebarMenu>
           </SidebarGroupContent>
