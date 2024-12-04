@@ -1,22 +1,22 @@
 "use client";
+import { api } from "@/convex/_generated/api";
+import { useSearch } from "@/hooks/Search";
 import { useUser } from "@clerk/clerk-react";
+import { useQuery } from "convex/react";
+import { File } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import {
   CommandDialog,
   CommandEmpty,
-  CommandInput,
   CommandGroup,
+  CommandInput,
   CommandItem,
   CommandList,
 } from "./ui/command";
-import { useRouter } from "next/navigation";
-import { useQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
-import { useSearch } from "@/hooks/Search";
-import { useEffect, useState } from "react";
-import { File } from "lucide-react";
-import { DialogTitle } from "./ui/dialog";
+import React from "react";
 
-export const SearchCommand = () => {
+const SearchCommand = () => {
   const { user } = useUser();
   const router = useRouter();
   const documents = useQuery(api.documents.getSearch);
@@ -53,7 +53,6 @@ export const SearchCommand = () => {
 
   return (
     <CommandDialog open={isOpen} onOpenChange={onClose}>
-      <DialogTitle className="hidden">Titile</DialogTitle>
       <CommandInput placeholder={`Search ${user?.fullName}'s Notion...`} />
       <CommandList>
         <CommandEmpty>No results found</CommandEmpty>
@@ -78,3 +77,5 @@ export const SearchCommand = () => {
     </CommandDialog>
   );
 };
+
+export default SearchCommand;

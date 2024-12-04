@@ -1,8 +1,9 @@
+"use client";
 import { cn } from "@/lib/utils";
 import { cva, VariantProps } from "class-variance-authority";
 import { Loader } from "lucide-react";
 
-const spinnerVarients = cva("text-muted-foreground animate-spin", { 
+const spinnerVarients = cva("text-muted-foreground animate-spin", {
   variants: {
     size: {
       default: "h-4 w-4",

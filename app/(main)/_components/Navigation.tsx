@@ -1,19 +1,5 @@
 "use client";
-import React from "react";
-import Link from "next/link";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarMenuSubItem,
-} from "@/components/ui/sidebar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,43 +9,44 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-  ChevronsLeftRight,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar";
+import { api } from "@/convex/_generated/api";
+import { SignOutButton, useUser } from "@clerk/clerk-react";
+
+import { useMutation } from "convex/react";
+import {
   ChevronsUpDown,
   Home,
   Inbox,
+  LogOut,
   Plus,
   PlusCircle,
   Search,
   Settings,
   Trash,
 } from "lucide-react";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { SignOutButton, useUser } from "@clerk/clerk-react";
-import { useMutation, useQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
-import Item from "./Item";
 import { toast } from "sonner";
 import DocumentList from "./DocumentList";
-import { Popover, PopoverTrigger } from "@/components/ui/popover";
-import { PopoverContent } from "@radix-ui/react-popover";
-import { useIsMobile } from "@/hooks/use-mobile";
+import Item from "./Item";
 import TrashBox from "./TrashBox";
-const items = [
-  {
-    title: "Home",
-    url: "/documents",
-    icon: Home,
-  },
-  {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
-  },
-];
+
 const Navigation = () => {
   const { user } = useUser();
   const create = useMutation(api.documents.create);
-  const isMobile = useIsMobile();
 
   const signedInWithGitHub = user?.externalAccounts.some(
     (account) => account.provider === "github"
@@ -104,10 +91,7 @@ const Navigation = () => {
                 <PopoverTrigger className="w-full mt-4">
                   <Item icon={Trash} label="Trash" />
                 </PopoverTrigger>
-                <PopoverContent
-                  className="p-0 w-72 rounded-sm border shadow-md font-medium"
-                  side={isMobile ? "bottom" : "right"}
-                >
+                <PopoverContent className="p-0 w-72 rounded-sm border shadow-md font-medium">
                   <TrashBox />
                 </PopoverContent>
               </Popover>
@@ -132,7 +116,12 @@ const Navigation = () => {
               </div>
             ) : (
               <div className="flex flex-col h-full w-full text-sm items-start text-gray-600">
-                <span className="font-bold ">{user?.firstName}</span>
+                <span
+                  className="fon
+                t-bold "
+                >
+                  {user?.firstName}
+                </span>
                 <span>{user?.username}</span>
               </div>
             )}
@@ -162,7 +151,7 @@ const Navigation = () => {
 
             <DropdownMenuItem
               asChild
-              className="w-full cursor-pointer text-muted-foreground"
+              className="w-full cursor-pointer text-muted-foreground flex gap-x-1"
             >
               <SignOutButton>Log Out</SignOutButton>
             </DropdownMenuItem>

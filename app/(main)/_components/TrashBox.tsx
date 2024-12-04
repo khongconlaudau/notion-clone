@@ -1,6 +1,6 @@
 "use client";
 
-import ConfirmModel from "@/components/models/ConfirmModel";
+import ConfirmModel from "@/components/modals/ConfirmModel";
 import { Spinner } from "@/components/spinner";
 import { Input } from "@/components/ui/input";
 import { api } from "@/convex/_generated/api";

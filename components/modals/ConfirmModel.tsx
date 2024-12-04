@@ -18,6 +18,7 @@ interface ConfirModelProps {
 }
 
 import React from "react";
+import { Dialog, DialogContent, DialogTitle } from "../ui/dialog";
 
 const ConfirmModel = ({ children, onConfirm }: ConfirModelProps) => {
   const handleConfirm = (
@@ -31,7 +32,8 @@ const ConfirmModel = ({ children, onConfirm }: ConfirModelProps) => {
       <AlertDialogTrigger onClick={(e) => e.stopPropagation()} asChild>
         {children}
       </AlertDialogTrigger>
-      <AlertDialogContent>
+
+      <AlertDialogContent title="Confirm">
         <AlertDialogHeader>
           <AlertDialogTitle>Are you sure?</AlertDialogTitle>
           <AlertDialogDescription>
