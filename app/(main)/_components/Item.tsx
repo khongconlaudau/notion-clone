@@ -107,7 +107,7 @@ const Item = ({
         <div
           role="button"
           title={title}
-          className="h-full rounded-sm hover:bg-neutral-300 dark:bg-slate-600 mr-1"
+          className="h-full rounded-sm hover:bg-neutral-300 dark:hover:bg-slate-600 mr-1"
           onClick={handleExpand}
         >
           <ChevronIcon className="h-4 w-4 shrink-0 text-muted-foreground/50" />
@@ -157,7 +157,7 @@ const Item = ({
             </DropdownMenuTrigger>
           </DropdownMenu>
           <div
-            className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm hover:bg-neutral-300 dark:bg-neutral-600 duration-300"
+            className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600 duration-300"
             onClick={onCreate}
           >
             <Plus className="h-4 w-4 text-muted-foreground" />

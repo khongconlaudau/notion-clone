@@ -1,3 +1,4 @@
+"use cleint";
 import { create } from "zustand";
 
 type SearchState = {

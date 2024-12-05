@@ -33,6 +33,7 @@ import {
   Home,
   Inbox,
   LogOut,
+  LogOutIcon,
   Plus,
   PlusCircle,
   Search,
@@ -43,11 +44,14 @@ import { toast } from "sonner";
 import DocumentList from "./DocumentList";
 import Item from "./Item";
 import TrashBox from "./TrashBox";
+import { useSearch } from "@/hooks/useSearch";
+import { useSetting } from "@/hooks/useSetting";
 
 const Navigation = () => {
+  const search = useSearch();
+  const setting = useSetting();
   const { user } = useUser();
   const create = useMutation(api.documents.create);
-
   const signedInWithGitHub = user?.externalAccounts.some(
     (account) => account.provider === "github"
   );
@@ -77,7 +81,7 @@ const Navigation = () => {
                   label="Search"
                   isSearch
                   icon={Search}
-                  onclick={() => {}}
+                  onclick={search.onOpen}
                 />
                 <Item
                   onclick={handleCreate}
@@ -142,18 +146,28 @@ const Navigation = () => {
                 </div>
               )}
             </DropdownMenuLabel>
-            <DropdownMenuSeparator className="bg-gray-300 " />
+            <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <div className="w-full translate-x-[-12px]">
-                <Item label="Setting" icon={Settings} onclick={() => {}} />
+              <div className="w-full translate-x-[-12px] flex justify-between">
+                <Item
+                  label="Setting"
+                  icon={Settings}
+                  onclick={setting.onOpen}
+                />
+                <kbd className="text-xs pt-1.5 font-thin w-full ml-14 text-muted-foreground bg-[#1b1b1b] rounded-sm p-1">
+                  CTRL Z
+                </kbd>
               </div>
             </DropdownMenuItem>
-
+            <DropdownMenuSeparator />
             <DropdownMenuItem
               asChild
               className="w-full cursor-pointer text-muted-foreground flex gap-x-1"
             >
-              <SignOutButton>Log Out</SignOutButton>
+              <div className="translate-x-[-6px]">
+                <LogOutIcon className="w-4 h-4 text-muted-foreground" />
+                <SignOutButton>Log Out</SignOutButton>
+              </div>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

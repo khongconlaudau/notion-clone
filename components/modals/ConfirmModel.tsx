@@ -18,7 +18,6 @@ interface ConfirModelProps {
 }
 
 import React from "react";
-import { Dialog, DialogContent, DialogTitle } from "../ui/dialog";
 
 const ConfirmModel = ({ children, onConfirm }: ConfirModelProps) => {
   const handleConfirm = (
@@ -33,9 +32,10 @@ const ConfirmModel = ({ children, onConfirm }: ConfirModelProps) => {
         {children}
       </AlertDialogTrigger>
 
-      <AlertDialogContent title="Confirm">
+      <AlertDialogContent>
+        <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you sure?</AlertDialogTitle>
           <AlertDialogDescription>
             This action can not be undone.
           </AlertDialogDescription>
