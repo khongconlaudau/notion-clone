@@ -113,13 +113,13 @@ const Navigation = () => {
             </Avatar>
             {!signedInWithGitHub ? (
               <div className="flex h-full items-center justify-center space-x-2 text-gray-600 overflow-hidden">
-                <span className="text-xs font-bold">
+                <span className="text-xs font-bold text-muted-foreground">
                   {user?.emailAddresses[0].emailAddress}
                 </span>
                 <ChevronsUpDown className="group-hover:scale-125 transition-transform duration-200" />
               </div>
             ) : (
-              <div className="flex flex-col h-full w-full text-sm items-start text-gray-600">
+              <div className="flex flex-col h-full w-full text-sm items-start text-muted-foreground">
                 <span
                   className="fon
                 t-bold "
@@ -136,11 +136,11 @@ const Navigation = () => {
                 <AvatarImage src={user?.imageUrl} className="rounded-sm" />
               </Avatar>
               {!signedInWithGitHub ? (
-                <div className="flex h-full items-center justify-center text-gray-600">
+                <div className="flex h-full items-center justify-center text-muted-foreground">
                   <span>{user?.emailAddresses[0].emailAddress}</span>
                 </div>
               ) : (
-                <div className="flex flex-col h-full w-full text-sm items-start text-gray-600">
+                <div className="flex flex-col h-full w-full text-sm items-start text-muted-foreground">
                   <span className="font-bold ">{user?.firstName}</span>
                   <span className="font-light">{user?.username}</span>
                 </div>

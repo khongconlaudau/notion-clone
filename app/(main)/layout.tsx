@@ -3,11 +3,15 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { Spinner } from "@/components/spinner";
 import { useConvexAuth } from "convex/react";
 import { redirect } from "next/navigation";
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect } from "react";
 import Navigation from "./_components/Navigation";
 import SearchCommand from "@/components/search-command";
 const MainLayout = ({ children }: { children: ReactNode }) => {
   const { isAuthenticated, isLoading } = useConvexAuth();
+  const [open, setOpen] = React.useState(true);
+  const triggerClass: string = open
+    ? "absolute translate-x-[-25px] z-[9999] w-hidden"
+    : "";
 
   if (isLoading) {
     return (
@@ -20,14 +24,17 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
   if (!isAuthenticated) {
     return redirect("/");
   }
+
   return (
-    <SidebarProvider>
+    <SidebarProvider open={open} onOpenChange={() => setOpen(!open)}>
       <div className="h-full w-full flex dark:bg-[#1b1b1b]">
         <Navigation />
         <main className="w-full">
-          <SidebarTrigger />
+          <div className="flex ">
+            <SidebarTrigger className={triggerClass} />
+            {children}
+          </div>
           <SearchCommand />
-          {children}
         </main>
       </div>
     </SidebarProvider>
