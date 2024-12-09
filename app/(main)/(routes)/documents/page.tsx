@@ -1,28 +1,30 @@
 "use client";
 
-import Lottie from "lottie-react";
-import React from "react";
+import { Button } from "@/components/ui/button";
+import { api } from "@/convex/_generated/api";
 import WalkingAnimation from "@/public/Animation/WalkingAnimation.json";
 import { useUser } from "@clerk/clerk-react";
-import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
 import { useMutation } from "convex/react";
-import { api } from "@/convex/_generated/api";
+import Lottie from "lottie-react";
+import { PlusCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 const DocumentsPage = () => {
   const { user } = useUser();
   const create = useMutation(api.documents.create);
-
+  const router = useRouter();
   const onCreate = () => {
     const promise = create({
       title: "Untitled",
     });
-
     toast.promise(promise, {
       loading: "Creating a new note...",
       success: "A new note created!",
       error: "Faid to create a new note.",
+    });
+    promise.then((documentId) => {
+      router.push(`/documents/${documentId}`);
     });
   };
   return (

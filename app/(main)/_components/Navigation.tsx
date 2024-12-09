@@ -31,6 +31,7 @@ import { useMutation } from "convex/react";
 import {
   ChevronsUpDown,
   Home,
+  HomeIcon,
   Inbox,
   LogOut,
   LogOutIcon,
@@ -46,15 +47,21 @@ import Item from "./Item";
 import TrashBox from "./TrashBox";
 import { useSearch } from "@/hooks/useSearch";
 import { useSetting } from "@/hooks/useSetting";
+import { useRouter } from "next/navigation";
 
 const Navigation = () => {
   const search = useSearch();
   const setting = useSetting();
   const { user } = useUser();
   const create = useMutation(api.documents.create);
+  const router = useRouter();
   const signedInWithGitHub = user?.externalAccounts.some(
     (account) => account.provider === "github"
   );
+
+  const goToMainPage = () => {
+    router.push("/documents");
+  };
 
   const handleCreate = () => {
     const promise = create({
@@ -66,7 +73,12 @@ const Navigation = () => {
       success: "A new note created!",
       error: "Failed to create a new note.",
     });
+
+    promise.then((documentId) => {
+      router.push(`/documents/${documentId}`);
+    });
   };
+
   return (
     <Sidebar className="bg-[#1b1b1b]">
       <SidebarHeader className="font-bold">Documents</SidebarHeader>
@@ -77,6 +89,7 @@ const Navigation = () => {
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
+                <Item label="Home" onclick={goToMainPage} icon={Home} />
                 <Item
                   label="Search"
                   isSearch
@@ -109,7 +122,7 @@ const Navigation = () => {
         <DropdownMenu>
           <DropdownMenuTrigger className="flex items-center space-x-1 w-full group">
             <Avatar>
-              <AvatarImage src={user?.imageUrl} className="rounded-sm" />
+              <AvatarImage src={user?.imageUrl} className="rounded-sm " />
             </Avatar>
             {!signedInWithGitHub ? (
               <div className="flex h-full items-center justify-center space-x-2 text-gray-600 overflow-hidden">

@@ -11,7 +11,7 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useUser } from "@clerk/clerk-react";
 import { useMutation } from "convex/react";
-import { MoreHorizontal, Trash } from "lucide-react";
+import { HomeIcon, MoreHorizontal, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
@@ -25,6 +25,9 @@ const Menu = ({ documentId }: MenuProps) => {
 
   const archive = useMutation(api.documents.archive);
 
+  const goToMainPage = () => {
+    router.push("/documents");
+  };
   const onArchive = () => {
     const promise = archive({ id: documentId });
 
@@ -47,6 +50,10 @@ const Menu = ({ documentId }: MenuProps) => {
         alignOffset={8}
         forceMount
       >
+        <DropdownMenuItem onClick={goToMainPage}>
+          <HomeIcon className="h-4 w-4" />
+          Home Page
+        </DropdownMenuItem>
         <DropdownMenuItem onClick={onArchive}>
           <Trash className="h-4 w-4" />
           Delete
