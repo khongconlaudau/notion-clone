@@ -31,9 +31,6 @@ import { useMutation } from "convex/react";
 import {
   ChevronsUpDown,
   Home,
-  HomeIcon,
-  Inbox,
-  LogOut,
   LogOutIcon,
   Plus,
   PlusCircle,
