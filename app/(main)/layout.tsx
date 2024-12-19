@@ -4,11 +4,10 @@ import { Spinner } from "@/components/spinner";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { useConvexAuth } from "convex/react";
 import { redirect } from "next/navigation";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import Navigation from "./_components/Navigation";
 const MainLayout = ({ children }: { children: ReactNode }) => {
   const { isAuthenticated, isLoading } = useConvexAuth();
-  const [open, setOpen] = React.useState(true);
 
   if (isLoading) {
     return (
@@ -23,10 +22,15 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
   }
 
   return (
-    <SidebarProvider open={open} onOpenChange={() => setOpen(!open)}>
+    <SidebarProvider>
       <Navigation />
-      <main className="w-full">
+      <main className="w-full dark:bg-[#1f1f1f]">
+        {/* <div className="flex w-full"> */}
         <SidebarTrigger />
+        {/* <div className="w-full">
+            <Navbar />
+          </div> */}
+        {/* </div> */}
         {children}
         <SearchCommand />
       </main>

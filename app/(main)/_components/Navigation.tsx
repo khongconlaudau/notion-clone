@@ -167,7 +167,10 @@ const Navigation = () => {
                   icon={Settings}
                   onclick={setting.onOpen}
                 />
-                <kbd className="text-xs pt-1.5 font-thin w-full ml-14 text-muted-foreground bg-[#1b1b1b] rounded-sm p-1">
+                <kbd
+                  className=" bg-transparent border
+                text-xs pt-1.5 font-thin w-full ml-14 text-muted-foreground rounded-sm p-1"
+                >
                   CTRL Z
                 </kbd>
               </div>

@@ -23,6 +23,7 @@ const DocumentsPage = () => {
       success: "A new note created!",
       error: "Faid to create a new note.",
     });
+
     promise.then((documentId) => {
       router.push(`/documents/${documentId}`);
     });
