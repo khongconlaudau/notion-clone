@@ -1,6 +1,5 @@
 "use client";
 
-import Navbar from "@/app/(main)/_components/Navbar";
 import Cover from "@/components/Cover";
 import { Editor } from "@/components/DynamicEditor";
 import Toolbar from "@/components/Toolbar";

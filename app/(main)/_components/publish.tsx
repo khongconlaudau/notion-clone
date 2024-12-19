@@ -3,8 +3,8 @@
 import { Button } from "@/components/ui/button";
 import {
   Popover,
-  PopoverTrigger,
   PopoverContent,
+  PopoverTrigger,
 } from "@/components/ui/popover";
 import { api } from "@/convex/_generated/api";
 import { Doc } from "@/convex/_generated/dataModel";
@@ -12,9 +12,8 @@ import { useOrigin } from "@/hooks/use-origin";
 import { useMutation } from "convex/react";
 import { Check, Copy, Globe } from "lucide-react";
 import { useTheme } from "next-themes";
-import React, { useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
-import { set } from "zod";
 
 interface PublishProps {
   initialData: Doc<"documents">;

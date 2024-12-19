@@ -8,7 +8,6 @@ import { ImageIcon, SmileIcon, X } from "lucide-react";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import TextareaAutoSize from "react-textarea-autosize";
-import { on } from "events";
 import { useCoverImage } from "@/hooks/use-cover-image";
 
 interface ToolbarProps {
